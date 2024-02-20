@@ -1,0 +1,92 @@
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styles */
+h1 {
+    color: #eb8181;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Button styles */
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Status message styles */
+p {
+    font-size: 16px;
+    text-align: center;
+    color: #333;
+    margin: 10px 0;
+}
+
+/* Section heading styles */
+h2 {
+    color: #007bff;
+    text-align: center;
+}
+
+/* Container styles */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Add styles for status messages */
+#statusMessage, #statusMessageLightsail {
+    margin-bottom: 50px; /* Add some spacing below the status message */
+    font-weight: bold; /* Make the text bold */
+    color: #080e02; /* Set text color */
+    font-size: 18px; /* Set font size */
+    text-align: center; /* Center-align the text */
+    opacity: 0; /* Initially hide the element */
+    animation: fadeIn 1s ease-in-out forwards; /* Apply fade-in animation */
+}
+
+/* Define fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; } /* Start from fully transparent */
+    to { opacity: 1; } /* End at fully opaque */
+}
+
+
+/* Add styles for the background */
+body {
+    background: linear-gradient(45deg, rgba(255, 0, 0, 0.5), rgba(255, 128, 0, 0.5), rgba(255, 255, 0, 0.5), rgba(128, 255, 0, 0.5), rgba(0, 255, 128, 0.5), rgba(0, 128, 255, 0.5), rgba(0, 0, 255, 0.5), rgba(128, 0, 255, 0.5), rgba(255, 0, 255, 0.5)); /* Set a colorful gradient with reduced opacity */
+    background-size: 200% 200%; /* Make the gradient larger than the viewport */
+    animation: streamingBackground 10s linear infinite; /* Apply animation to the background */
+}
+
+/* Define the animation for the background */
+@keyframes streamingBackground {
+    0% {
+        background-position: 0% 50%; /* Start the gradient from the left */
+    }
+    100% {
+        background-position: 100% 50%; /* End the gradient to the right */
+    }
+}
+
+

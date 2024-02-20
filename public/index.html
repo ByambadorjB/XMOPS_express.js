@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XMOPS</title>
+   <link rel="stylesheet" href="../style/styles.css">
+
+</head>
+<body>
+    <h1>XMOPS </h1>
+    <h2>WordPress Management Provision on EC2 Instance</h2>
+    <p id="statusMessage"></p> <!-- Paragraph to display status message -->
+    <button id="createEc2Btn">Install Wordpress on EC2 Instance</button>
+    <button id="destroyEc2Btn">Destroy Wordpress installed EC2 Instance</button>
+
+    <div id="loading" style="display: none;" class="loader">
+    
+    </div>
+
+     <!-- WordPress Management Section -->
+     <h2>WordPress Management Provision By AWS Lightsail</h2>
+     <p id="statusMessageLightsail"></p>
+     <button id="provisionLightsailWordPressBtn">Provision Lightsail WordPress</button>
+     <button id="destroyLightsailWordPressBtn">Destroy Lightsail WordPress</button>
+
+    <script>
+        document.getElementById('createEc2Btn').addEventListener('click', () =>{
+            document.getElementById('statusMessage').innerText = 'Installing Wordpress on EC2 instance...'; // Displaying status message
+            fetch('/create-ec2', {method: 'POST'})
+            .then(response => {
+                if(!response.ok){
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                document.getElementById('statusMessage').innerText = ''; // Clearing status message after completion
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation', error);
+                document.getElementById('statusMessage').innerText = ''; // Clearing status message on error
+            });
+        });
+
+        document.getElementById('destroyEc2Btn').addEventListener('click', () => {
+            document.getElementById('statusMessage').innerText = 'Destroying Wordpress installed EC2 instance...'; // Displaying status message
+            fetch('/destroy-ec2', { method: 'POST' })
+            .then(response => {
+                if(!response.ok){
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then (data => {
+                alert(data);
+                document.getElementById('statusMessage').innerText = ''; // Clearing status message after completion
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation', error);
+                document.getElementById('statusMessage').innerText = ''; // Clearing status message on error
+            });
+        });
+
+        // Function to handle provisioning Wordpress in Lightsail
+        document.getElementById('provisionLightsailWordPressBtn').addEventListener('click', () => {
+            document.getElementById('statusMessageLightsail').innerHTML = 'Provisioning Wordpress...'; // display status message
+            fetch('/provision-lightsail-wordpress', {method: 'POST'})
+            .then(response => {
+                if(!response.ok){
+                    throw new Error('Network response was not ok in lightsail Wordpress');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                document.getElementById('statusMessageLightsail').innerHTML = '';
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation', error);
+                document.getElementById('statusMessageLightsail').innerHTML = '';
+            });
+        });
+
+        // Function to handle destroying Wordpress in Lightsail
+        document.getElementById('destroyLightsailWordPressBtn').addEventListener('click', () => {
+            document.getElementById('statusMessageLightsail').innerHTML = 'Destroying Wordpress...'; // display status message
+            fetch('/destroy-lightsail-wordpress', {method: 'POST'})
+            .then(response => {
+                if(!response.ok){
+                    throw new Error('Network response was not ok in destroying lightsail Wordpress');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                document.getElementById('statusMessageLightsail').innerHTML = '';
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation', error);
+                document.getElementById('statusMessageLightsail').innerHTML = '';
+            });
+        });
+    </script>
+</body>
+</html>
