@@ -14,3 +14,6 @@ node src/server.js
 Page is running on Port 4000
 http://localhost:4000
 
+Terraform needs to be started
+cd src/terraform/
+terraform init
