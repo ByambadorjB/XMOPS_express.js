@@ -1,12 +1,8 @@
 # XMOPS
 Team2
 
-
-Install Node.js:
-npm init -y
-
-Install Express.js:
-npm install express
+To start
+src/init.sh // This command installs express and aws-sdk
 
 To run webpage
 node src/server.js
