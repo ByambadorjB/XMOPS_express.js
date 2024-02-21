@@ -168,10 +168,5 @@ src/terraform-lightsail/.terraform/providers/registry.terraform.io/hashicorp/aws
 
 node_modules/
 
-# Ignore all files and directories inside src/terraform-s3/
-src/terraform-s3/*
 
-# Except for specific files
-!src/terraform-s3/main.tf
-!src/terraform-s3/global.tf
 
