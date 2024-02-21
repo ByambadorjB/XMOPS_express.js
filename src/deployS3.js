@@ -10,7 +10,7 @@ async function deployS3Bucket(){
         region: 'ap-southeast-2'
     });
 
-    const bucketName = 'xmops-data-bucket';
+    const bucketName = 'xmops-data-bucket-team2';
 
     // Check if the bucket already exists
     s3.headBucket({Bucket: bucketName}, (err, data) => {
