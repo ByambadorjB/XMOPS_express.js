@@ -6,22 +6,6 @@ const app = express();
 const path = require('path'); // Import the 'path' module
 const deployS3Bucket = require('./deployS3');
 
-// Function to execute init.sh script
-function executeInitScript() {
-    console.log('Initializing setup...');
-    exec('./init.sh', { cwd: 'src' }, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Initialization failed: ${error}`);
-            return;
-        } else {
-            console.log('Setup completed successfully.');
-            console.log(`stdout: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
-        }
-    });
-}
-// Execute init.sh script before starting the server
-executeInitScript();
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, '../public')));
