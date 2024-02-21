@@ -162,3 +162,6 @@ cython_debug/
 
 .DS_Store
 src/.DS_Store
+
+src/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.37.0/darwin_arm64/terraform-provider-aws_v5.37.0_x5
+
