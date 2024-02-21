@@ -13,7 +13,7 @@ app.use('/style', express.static(path.join(__dirname, '../style')));
 // Initialize Terraform Configuration
 // Automatically initialize Terraform Configuration upon server startup
 console.log('Initializing Terraform configuration...');
-exec('terraform init', {cwd: './src'}, (error, stdout, stderr) => {
+exec('./init-terraform.sh', {cwd: 'src'}, (error, stdout, stderr) => {
     if(error){
         console.error(`Terraform initialization failed: ${error}`);
         return;
@@ -49,8 +49,8 @@ app.post('/destroy-ec2', (req, res) => {
             res.status(500).send('Internal Server Error');
             return;
         }
-        console.log('stdout: ${stdout}');
-        console.error('stderr: ${stderr}');
+        console.log(`stdout: ${stdout}`);
+        console.error(`stderr: ${stderr}` + ' Ec2 instance is destroyed successfully');
         res.send('EC2 instance successfully destroyed!');
     });
 });
@@ -77,8 +77,8 @@ app.post('/destroy-lightsail-wordpress', (req, res) => {
             res.status(500).send('Internal Server Error in Wordpress Lightsail to destroy');
             return;
         }
-        console.log('stdout: ${stdout}');
-        console.error('stderr: ${stderr}');
+        console.log(`stdout: ${stdout}`);
+        console.error(`stderr: ${stderr}` + 'Wordpress in Lightsail is destroyed successfully!');
         res.send('Wordpress in Lightsail is destroyed successfully!');
     });
 });
