@@ -13,7 +13,7 @@ app.use('/style', express.static(path.join(__dirname, '../style')));
 // Initialize Terraform Configuration
 // Automatically initialize Terraform Configuration upon server startup
 console.log('Initializing Terraform configuration...');
-exec('terraform init', {cwd: './src/terraform ./terraform-lightsail'}, (error, stdout, stderr) => {
+exec('terraform init', {cwd: './src'}, (error, stdout, stderr) => {
     if(error){
         console.error(`Terraform initialization failed: ${error}`);
         return;

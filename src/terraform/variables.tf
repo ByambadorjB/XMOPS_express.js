@@ -13,20 +13,6 @@ variable "instance_type" {
   description = "Instance type of the EC2 instance"
 }
 
-# variable "aws_region" {
-#   description = "EC2 created."
-#   default     = "ap-southeast-2" #  region
-# }
-
-# variable "instance_ami" {
-#   description = "The AMI ID for the EC2 instance."
-#   default     = "ami-0611295b922472c22" #   AMI ID
-# }
-
-# variable "instance_type" {
-#   description = "The type of the EC2 instance."
-#   default     = "t2.micro" #  instance type
-# }
 
 
 output "public_ip" {
