@@ -2,15 +2,18 @@
 
 const AWS = require('aws-sdk');
 
+// Configure AWS credentials globally
+AWS.config.update({
+    accessKeyId: 'AKIAXZO6SAUMZBVQHHJL',
+    secretAccessKey: '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',
+    region: 'ap-southeast-2'
+});
+
+const bucketName = 'xmops-data-bucket-team2';
+
 async function deployS3Bucket(){
     
-    const s3 = new AWS.S3({
-        accessKeyId: 'AKIAXZO6SAUMZBVQHHJL',
-        secretAccessKey: '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',
-        region: 'ap-southeast-2'
-    });
-
-    const bucketName = 'xmops-data-bucket-team2';
+    const s3 = new AWS.S3();
 
     // Check if the bucket already exists
     s3.headBucket({Bucket: bucketName}, (err, data) => {
@@ -38,5 +41,8 @@ async function deployS3Bucket(){
 
 
 // Export the function so it can be used in other modules
-module.exports = deployS3Bucket;
+module.exports = { deployS3Bucket, bucketName };
+
+
+
 

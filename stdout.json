@@ -1,0 +1,9 @@
+{
+  "availability_zone": "ap-southeast-2c",
+  "instance_id": "i-03d4a0617801fc67b",
+  "instance_state": "running",
+  "instance_type": "t2.micro",
+  "key_name": "wordpress_server",
+  "private_ip": "172.31.28.54",
+  "public_ip": "3.104.104.179"
+}

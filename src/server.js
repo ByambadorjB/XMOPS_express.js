@@ -4,7 +4,13 @@ const { error } = require('console');
 const { stdout, stderr } = require('process');
 const app = express();
 const path = require('path'); // Import the 'path' module
-const deployS3Bucket = require('./deployS3');
+// const deployS3Bucket = require('./deployS3');
+// const bucketName = require('./deployS3');
+const { parseInstanceData, uploadToS3 } = require('./utils');
+const { deployS3Bucket, bucketName } = require('./deployS3');
+
+
+const fs = require('fs');
 
 
 // Serve static files from the 'public' directory
@@ -40,8 +46,37 @@ app.post('/create-ec2', (req, res) => {
             return;
         }
         console.log(`stdout: ${stdout}`);
+
+        const instanceData = parseInstanceData(stdout);
+        console.log('parsed stdout data' + instanceData);
+        // Convert the object to a JSON string
+        const jsonData = JSON.stringify(instanceData, null, 2);
+
+        console.log('Converted parsed stdout data' + jsonData);
+
+        // Write stdout to a JSON file
+        fs.writeFile('stdout.json', jsonData, (err) => {
+            if(err){
+                console.error('Error writing to file: ', err)
+            } else {
+                console.log('stdout saved to stdout.json');
+                //console.log(instanceData);
+            }
+        });
+
+        // Upload data to s3 bucket
+        uploadToS3(jsonData, bucketName, 'instanceData.json')
+        .then((result) => {
+            console.log('S3 upload result:', result);
+            console.log('EC2 creation Data uploaded to S3 ', result.Location);
+        })
+        .catch((error) => {
+            console.error('Error uploading to s3', error);
+        });
         console.error(`stderr: ${stderr}`);
         res.send('EC2 instance created successfully!');
+
+        
     });
 });
 
@@ -49,7 +84,7 @@ app.post('/create-ec2', (req, res) => {
 app.post('/destroy-ec2', (req, res) => {
     exec('terraform destroy -auto-approve', {cwd: './src/terraform'}, (error, stdout, stderr) => {
         if (error){
-            console.error('exec error: ${error}');
+            console.error(`exec error: ${error}`);
             res.status(500).send('Internal Server Error');
             return;
         }
@@ -86,9 +121,6 @@ app.post('/destroy-lightsail-wordpress', (req, res) => {
         res.send('Wordpress in Lightsail is destroyed successfully!');
     });
 });
-
-
-
 
 // Serve static files
 //app.use(express.static('public'));

@@ -24,3 +24,31 @@ output "instance_id" {
   value       = aws_instance.EC2-create-from-button.id
   description = "Instance ID"
 }
+
+output "private_ip" {
+  value = aws_instance.EC2-create-from-button.private_ip
+}
+
+output "instance_state" {
+  value = aws_instance.EC2-create-from-button.instance_state
+}
+
+output "instance_type" {
+  value = aws_instance.EC2-create-from-button.instance_type
+}
+
+output "availability_zone" {
+  value = aws_instance.EC2-create-from-button.availability_zone
+}
+
+output "ami_id" {
+  value = aws_instance.EC2-create-from-button.ami
+}
+
+output "key_name" {
+  value = aws_instance.EC2-create-from-button.key_name
+}
+
+# output "instance_region" {
+#   value = aws_instance.EC2-create-from-button.instance_region
+# }
