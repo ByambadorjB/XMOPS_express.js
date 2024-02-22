@@ -4,58 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XMOPS</title>
-   <link rel="stylesheet" href="../style/styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../style/styles.css">
 
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <div class="navbar">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <div class="user-profile">
-            Username: [User123] | Role: [Admin] | <a href="#">Logout</a>
-        </div>
-    </div>
-    
-    <!--Header Section-->
-    <header>
-        <h1>XMOPS </h1>
-    </header>
+    <div class="wrapper">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">XMOPS</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Services</a>
+                        </li>
+                    </ul>
+                    <div class="user-profile ms-auto">
+                        Username: [User123] | Role: [Admin] | <a href="#">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
         
-    <!-- Main Content Section -->
-    <div id="content">
+        <!--Header Section-->
+        <header class="bg-primary py-5">
+            <div class="container text-center">
+                <h1>XMOPS</h1>
+            </div>
+        </header>
+            
+        <!-- Main Content Section -->
+        <div class="content container mt-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- WordPress Management Menu -->
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">WordPress Management</h5>
+                            <button id="createEc2Btn" class="btn btn-primary mb-3">Install Wordpress on EC2 Instance</button>
+                            <button id="destroyEc2Btn" class="btn btn-danger">Destroy Wordpress installed EC2 Instance</button>
+                            <button id="provisionLightsailWordPressBtn" class="btn btn-primary mt-3">Provision Lightsail WordPress</button>
+                            <button id="destroyLightsailWordPressBtn" class="btn btn-danger">Destroy Lightsail WordPress</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <!-- Running Instances Section -->
+                    <h2>Running Instances</h2>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Instance ID</th>
+                                    <th>Region</th>
+                                    <th>Created Time</th>
+                                    <th>Duration</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody id="runningInstancesList">
+                                <!-- List of running instances will be dynamically populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <h2>WordPress Management Provision on EC2 Instance</h2>
-        <p id="statusMessage"></p> <!-- Paragraph to display status message -->
-        <button id="createEc2Btn">Install Wordpress on EC2 Instance</button>
-        <button id="destroyEc2Btn">Destroy Wordpress installed EC2 Instance</button>
+        <!-- Paragraph to display status message for EC2 -->
+        <p id="statusMessage" class="text-center mt-5 mb-0"></p>
 
-        <div id="loading" style="display: none;" class="loader">
+        <!-- Paragraph to display status message for Lightsail -->
+        <p id="statusMessageLightsail" class="text-center mt-5 mb-0"></p>
+
+
+
         
-        </div>
-
-        <!-- WordPress Management Section -->
-        <h2>WordPress Management Provision By AWS Lightsail</h2>
-        <p id="statusMessageLightsail"></p>
-        <button id="provisionLightsailWordPressBtn">Provision Lightsail WordPress</button>
-        <button id="destroyLightsailWordPressBtn">Destroy Lightsail WordPress</button>
-
-        <!-- Running Instances Section -->
-        <div id="runningInstances">
-            <h2>Running Instances</h2>
-            <ul id="runningInstancesList">
-                <!-- List of running instances will be dynamically populated here -->
-            </ul>
-        </div>
+        <!-- Footer Section -->
+        <footer class="bg-dark text-white py-4 mt-auto">
+            <div class="container text-center">
+                <p>&copy; 2024 XMOPS. All rights reserved.</p>
+            </div>
+        </footer>
     </div>
 
-    <!-- Footer Section -->
-    <footer>
-        <p>&copy; 2024 XMOPS. All rights reserved.</p>
-    </footer>
-
+    <!-- Bootstrap JS (optional, only if you need Bootstrap JavaScript components) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     
+    <!-- Your Custom Script -->
 
     <script>
         document.getElementById('createEc2Btn').addEventListener('click', () =>{
