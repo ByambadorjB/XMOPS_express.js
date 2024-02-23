@@ -1,9 +1,11 @@
 {
-  "availability_zone": "ap-southeast-2c",
-  "instance_id": "i-03d4a0617801fc67b",
+  "ami_id": "ami-04f5097681773b989",
+  "availability_zone": "ap-southeast-2a",
+  "instance_id": "i-06bbbf84b05f5af1f",
+  "instance_region": "ap-southeast-2",
   "instance_state": "running",
   "instance_type": "t2.micro",
   "key_name": "wordpress_server",
-  "private_ip": "172.31.28.54",
-  "public_ip": "3.104.104.179"
+  "private_ip": "172.31.4.100",
+  "public_ip": "3.24.232.31"
 }

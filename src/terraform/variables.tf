@@ -13,8 +13,6 @@ variable "instance_type" {
   description = "Instance type of the EC2 instance"
 }
 
-
-
 output "public_ip" {
   value       = aws_instance.EC2-create-from-button.public_ip
   description = "Public IP Address of EC2 instance"
@@ -49,6 +47,15 @@ output "key_name" {
   value = aws_instance.EC2-create-from-button.key_name
 }
 
+output "aami_id" {
+  value = aws_instance.EC2-create-from-button.ami
+  description = "Fake output, to take real ami_id in the Parsed body in utils.js"
+}
+
 # output "instance_region" {
-#   value = aws_instance.EC2-create-from-button.instance_region
+#   value = aws_instance.EC2-create-from-button.region
 # }
+
+output "instance_region" {
+  value = data.aws_region.current.name
+}

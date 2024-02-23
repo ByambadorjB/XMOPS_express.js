@@ -1,6 +1,8 @@
 provider "aws" {
   region = var.aws_region
 }
+data "aws_region" "current" {}
+
 
 resource "aws_instance" "EC2-create-from-button" {
   ami           = var.ami_id

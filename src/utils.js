@@ -1,4 +1,27 @@
 const AWS = require('aws-sdk'); // Import AWS SDK
+const { response } = require('express');
+  
+function destroyEC2(){
+    document.getElementById('statusMessage').innerText = 'Destroying Wordpress installed EC2 instance...'; // Displaying status message
+    fetch('/destroy-ec2', {method: 'POST'})
+    .then(response => {
+        if(!response.ok){
+            throw new Error('Network response was not ok From destroyEC2 function in utils.js');
+        }
+        return response.text();
+    })
+    .then (data => {
+        // Handle successful
+        alert('Alerting from destroyEC2 function in utils.js: ', data);
+        document.getElementById('statusMessage').innerText = ''; // Clearing status message after completion
+    })
+    .catch(error => {
+        console.error('There was a problem with fetching /destroy-ec2 call from destroyEC2 function in utils.js', error);
+        alert('Failed to destroy EC2 instance from destroyEC2 function in utils.js')
+        // document.getElementById('statusMessage').innerText = ''; // Clearing status message on error
+    });
+    // document.getElementById('statusMessage').innerText = ''; // Clearing status message on error
+}
 
 function parseInstanceData(stdout){
     const lines = stdout.split('\n');
@@ -10,17 +33,22 @@ function parseInstanceData(stdout){
             const key = parts[0].trim();
             const value = parts[1].replace(/"/g, '').trim(); // remove double quotes
 
-            // Map the specific keys to their corresponding values
+            // Remove ANSI escape codes for color formatting
+            //value = value.replace(/\u001b\[0\d+m/g, '');
+
+            //Map the specific keys to their corresponding values
             if( key === 'ami_id' ||
                 key === 'availability_zone' ||
                 key === 'instance_id' ||
                 key === 'instance_state' ||
                 key === 'instance_type' ||
+                key === 'instance_region' ||
                 key === 'key_name' ||
                 key === 'private_ip' ||
                 key === 'public_ip') {
                 instanceData[key] = value;
             } 
+           
         }
     });
     
@@ -29,25 +57,6 @@ function parseInstanceData(stdout){
 
 // Create S3 service object
 const s3 = new AWS.S3();
-
-// // Define the data to write as JSON
-// const data = {
-//     ami_id: "DDDDDDDDDDDDD",
-//     availability_zone: "ap-southeast-2c",
-//     instance_id: "i-0594aef5d7ae91766",
-//     instance_state: "running",
-//     instance_type: "t2.micro",
-//     key_name: "wordpress_server",
-//     private_ip: "172.31.24.39",
-//     public_ip: "3.27.255.65"
-// };
-
-// Convert the data to JSON string
-//const jsonData = JSON.stringify(data, null, 2);
-
-// Specify S3 bucket name and object key
-// const bucketName = 'xmops-data-bucket-team2';
-// const key = 'data.json'; // Specify the key for the JSON file in S3
 
 // Function to upload data to S3 bucket
 async function uploadToS3(data, bucketName, fileName){
@@ -62,16 +71,6 @@ async function uploadToS3(data, bucketName, fileName){
 
     console.log(params);
 
-
-    // //Upload the Json data to s3
-    // s3.putObject(params, (err, data) => {
-    //     if(err){
-    //         console.error('Error uploading data to S3: ', err);
-    //     } else {
-    //         console.log('Data uploaded successfully to S3: ', data);
-    //     }
-    // });
-
     try{
         //Upload the object to the s3 bucket
         const result = await s3.upload(params).promise();
@@ -84,10 +83,37 @@ async function uploadToS3(data, bucketName, fileName){
 
 }
 
-//uploadToS3(jsonData, bucketName, key);
+// function to add a new row to the running instances table
+function addInstanceToTable(instanceDetails){
+    //alert('addInstanceToTable function');
+    console.log('addInstanceToTable function', instanceDetails);
+    const tableBody = document.getElementById('runningInstancesList');
+    const newRow = document.createElement('tr');
+    alert('Please see the value of instanceDetails value in utils.js: ', instanceDetails);
+    console.log('Please see the value of instanceDetails value in utils.js: ', instanceDetails);
+
+    // Populate table cells with instance details
+    newRow.innerHTML = `
+        <td>${instanceDetails.ami_id}</td>
+        <td>${instanceDetails.availability_zone}</td>
+        <td>${instanceDetails.instance_id}</td>
+        <td>${instanceDetails.instance_region}</td>
+        <td>${instanceDetails.instance_state}</td>
+        <td>${instanceDetails.instance_type}</td>
+        <td>${instanceDetails.key_name}</td>
+        <td>${instanceDetails.private_ip}</td>
+        <td>${instanceDetails.public_ip}</td>
+        <td><button class="btn btn-sm btn-danger btn-destroy">Destroy</button></td>
+        `;
+        
+    // Append the new row to the table body
+    tableBody.appendChild(newRow);
+}
 
 // Export parseInstanceData and uploadToS3 functions
 module.exports = {
     parseInstanceData,
-    uploadToS3
+    uploadToS3,
+    addInstanceToTable,
+    destroyEC2
 };

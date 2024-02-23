@@ -1,4 +1,6 @@
 // deployS3.js
+// deployS3.js
+const { addInstanceToTable } = require('./utils');
 
 const AWS = require('aws-sdk');
 
@@ -37,11 +39,35 @@ async function deployS3Bucket(){
    
 };
 
+function retrieveInstanceDataFromS3() {
+    const s3 = new AWS.S3();
+
+    const params = {
+        Bucket: bucketName,
+        Key: 'instanceData.json'
+    };
+    //alert ('Showing S3 bucket :', params);
+    console.log('Showing S3 bucket :', params);
+    s3.getObject(params, (err, data) => {
+        if (err) {
+            console.error('Error retrieving instance data from S3:', err);
+        } else {
+            // Parse the retrieved data
+            const instanceData = JSON.parse(data.Body.toString());
+            console.log('Instance data retrieved from S3:', instanceData);
+
+            // Populate your table with the instance data
+            //addInstanceToTable(instanceData);
+        }
+    });
+}
+
+//retrieveInstanceDataFromS3();
 //deployS3Bucket();
 
 
 // Export the function so it can be used in other modules
-module.exports = { deployS3Bucket, bucketName };
+module.exports = { deployS3Bucket, bucketName, retrieveInstanceDataFromS3 };
 
 
 
