@@ -6,9 +6,9 @@ const AWS = require('aws-sdk');
 
 // Configure AWS credentials globally
 AWS.config.update({
-    accessKeyId: 'AKIAXZO6SAUMZBVQHHJL',
-    secretAccessKey: 'MN8c4tcf3+LR5NNp5GlYELStTQBnFmclpuGZDytf',
-    region: 'ap-southeast-2'
+    accessKeyId: 'put your key',
+    secretAccessKey: 'put your key',
+    region: 'put you region'
 });
 
 const bucketName = 'xmops-data-bucket-team2';
